@@ -43,8 +43,9 @@ public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistor
         holder.foodGroup.setText(details.getFoodGroup());
         holder.foodType.setText(details.getFoodType());
         holder.serving.setText(details.getServing());
+        holder.quantity.setText(details.getQuantity());
         holder.date.setText(details.getDate());
-        holder.time.setText(details.getTime());
+        holder.meal_time.setText(details.getMealTime());
     }
 
     public void clearAdapter()
@@ -56,12 +57,12 @@ public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistor
     @Override
     public int getItemCount()
     {
-        return (null != list ? list.size() : 0);
+        return list.size();
     }
 
     public class ListHolderView extends RecyclerView.ViewHolder
     {
-        protected TextView foodGroup, foodType, serving, date, time;
+        protected TextView foodGroup, foodType, serving, quantity, date, meal_time;
 
         public ListHolderView(View itemView)
         {
@@ -69,8 +70,9 @@ public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistor
             this.foodGroup = (TextView) itemView.findViewById(R.id.foodgr);
             this.foodType = (TextView) itemView.findViewById(R.id.foodtr);
             this.serving = (TextView) itemView.findViewById(R.id.servingr);
+            this.quantity = (TextView) itemView.findViewById(R.id.quantityr);
             this.date = (TextView) itemView.findViewById(R.id.dater);
-            this.time = (TextView) itemView.findViewById(R.id.timer);
+            this.meal_time = (TextView) itemView.findViewById(R.id.timer);
         }
     }
 }

@@ -32,6 +32,7 @@ public class FoodHistroyFragment extends Fragment
     private FoodHistoryRecyclerAdapter foodHistoryRecyclerAdapter;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private  DatabaseHelper db;
     private int dateRange = 0;
     @Nullable
     @Override
@@ -44,6 +45,7 @@ public class FoodHistroyFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.past_data);
         sevenDays = (Button) view.findViewById(R.id.seven_days);
         oneMonth = (Button) view.findViewById(R.id.one_month);
+        db = new DatabaseHelper(getActivity());
         final LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
         layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager1);
@@ -56,7 +58,7 @@ public class FoodHistroyFragment extends Fragment
         final String endDate = dateFormat.format(cal.getTime());
 
 
-        updateList(startDate,endDate);
+
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager1) {
             @Override
             public void onLoadMore(int current_page) {
@@ -66,6 +68,7 @@ public class FoodHistroyFragment extends Fragment
 
             }
         });
+        updateList(startDate,endDate);
         comparison.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,14 +112,12 @@ public class FoodHistroyFragment extends Fragment
 
     private void updateList(String startDate, String endDate)
     {
-        DatabaseHelper db = new DatabaseHelper(getActivity());
         foodHistoryRecyclerAdapter = new FoodHistoryRecyclerAdapter(getActivity(), db.getListFoods(1,startDate,endDate));
         recyclerView.setAdapter(foodHistoryRecyclerAdapter);
     }
 
     private void loadMore(int page,String startDate, String endDate)
     {
-        DatabaseHelper db = new DatabaseHelper(getActivity());
         foodHistoryRecyclerAdapter = new FoodHistoryRecyclerAdapter(getActivity(), db.getListFoods(page,startDate,endDate));
         recyclerView.setAdapter(foodHistoryRecyclerAdapter);
     }

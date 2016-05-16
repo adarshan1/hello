@@ -136,8 +136,8 @@ public class LogFoodActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                databaseHelper = new DatabaseHelper(LogFoodActivity.this);
-               if(databaseHelper.insert(foodGroup.getSelectedItem().toString(), foodType.getSelectedItem().toString(), quantity.getText().toString() + " " + servingsType.getSelectedItem().toString()
-                       , date.getText().toString(), time)) {
+               if(databaseHelper.insert(foodGroup.getSelectedItem().toString(), foodType.getSelectedItem().toString(), quantity.getText().toString() ,  servingsType.getSelectedItem().toString()
+                       , date.getText().toString(), mealTime.getSelectedItem().toString())) {
                    Toast.makeText(getApplicationContext(), "entry successful", Toast.LENGTH_SHORT).show();
                } else {
                    Toast.makeText(getApplicationContext(), "entry unsuccessful", Toast.LENGTH_SHORT).show();

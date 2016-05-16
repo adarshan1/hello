@@ -23,8 +23,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public static final String FOOD_GROUP = "food_group";
     public static final String FOOD_TYPE = "food_type";
     public static final String QUANTITY = "quantity";
+    public static final String SERVINGS = "servings";
     public static final String DATE = "date";
-    public static final String TIME = "time";
+    public static final String MEAL_TIME = "meal_time";
 
     public DatabaseHelper(Context context)
     {
@@ -39,8 +40,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
             + FOOD_GROUP + " TEXT,"
             + FOOD_TYPE + " TEXT,"
             + QUANTITY + " TEXT,"
+            + SERVINGS + " TEXT,"
             + DATE + " TEXT,"
-            + TIME + " TEXT" + ")");
+            + MEAL_TIME + " TEXT" + ")");
     }
 
     @Override
@@ -50,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    public boolean insert(String food_group, String food_type, String quantity, String date,
+    public boolean insert(String food_group, String food_type, String quantity, String servings, String date,
                           String time)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -59,8 +61,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(FOOD_GROUP, food_group);
         contentValues.put(FOOD_TYPE, food_type);
         contentValues.put(QUANTITY, quantity);
+        contentValues.put(SERVINGS, servings);
         contentValues.put(DATE, date);
-        contentValues.put(TIME, time);
+        contentValues.put(MEAL_TIME, time);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         if (result == -1)
@@ -85,9 +88,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
             PastData food = new PastData();
             food.setFoodGroup(cursor.getString(cursor.getColumnIndex(FOOD_GROUP)));
             food.setFoodType(cursor.getString(cursor.getColumnIndex(FOOD_TYPE)));
-            food.setServing(cursor.getString(cursor.getColumnIndex(QUANTITY)));
+            food.setQuantity(cursor.getString(cursor.getColumnIndex(QUANTITY)));
+            food.setServing(cursor.getString(cursor.getColumnIndex(SERVINGS)));
             food.setDate(cursor.getString(cursor.getColumnIndex(DATE)));
-            food.setTime(cursor.getString(cursor.getColumnIndex(TIME)));
+            food.setMealTime(cursor.getString(cursor.getColumnIndex(MEAL_TIME)));
             listFoods.add(food);
 
         }
