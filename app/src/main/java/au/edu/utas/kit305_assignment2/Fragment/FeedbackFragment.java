@@ -65,7 +65,7 @@ public class FeedbackFragment extends Fragment
     {
         if(i == 1) {
             tfidDeatils.setVisibility(View.VISIBLE);
-            tfidDeatils.setText("tips for improving diet");
+            tfidDeatils.setText("tips for improving diet"+"\n"+"point"+"\n"+"point");
             suggestionDetails.setVisibility(View.GONE);
             moreInfromationDetails.setVisibility(View.GONE);
         } else if(i == 2) {

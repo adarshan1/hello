@@ -2,6 +2,7 @@ package au.edu.utas.kit305_assignment2.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,9 @@ import au.edu.utas.kit305_assignment2.R;
 /**
  * Created by adarshan on 5/13/16.
  */
-public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistoryRecyclerAdapter.ListHolderView>
+public class FoodHistoryRecyclerAdapter extends RecyclerView.Adapter<FoodHistoryRecyclerAdapter.ListHolderView>
 {
-    private List<PastData> list;
+    public List<PastData> list;
     private Context context;
 
     public FoodHistoryRecyclerAdapter(Context context, List<PastData> list)
@@ -25,6 +26,7 @@ public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistor
     {
         this.context = context;
         this.list = list;
+        Log.i("size",list.size()+"");
     }
 
 
@@ -43,7 +45,6 @@ public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistor
         holder.foodGroup.setText(details.getFoodGroup());
         holder.foodType.setText(details.getFoodType());
         holder.serving.setText(details.getServing());
-        holder.quantity.setText(details.getQuantity());
         holder.date.setText(details.getDate());
         holder.meal_time.setText(details.getMealTime());
     }
@@ -52,6 +53,12 @@ public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistor
     {
         list.clear();
         notifyDataSetChanged();
+    }
+
+    public List<PastData> getListItems() { return list; }
+
+    public PastData getItem(int index) {
+        return list.get(index);
     }
 
     @Override
@@ -70,7 +77,6 @@ public class FoodHistoryRecyclerAdapter  extends RecyclerView.Adapter<FoodHistor
             this.foodGroup = (TextView) itemView.findViewById(R.id.foodgr);
             this.foodType = (TextView) itemView.findViewById(R.id.foodtr);
             this.serving = (TextView) itemView.findViewById(R.id.servingr);
-            this.quantity = (TextView) itemView.findViewById(R.id.quantityr);
             this.date = (TextView) itemView.findViewById(R.id.dater);
             this.meal_time = (TextView) itemView.findViewById(R.id.timer);
         }

@@ -17,15 +17,15 @@ import au.edu.utas.kit305_assignment2.Pojo.PastData;
  */
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-    private List<PastData> listFoods = new ArrayList<PastData>();
+    public ArrayList<PastData> listFoods = new ArrayList<PastData>();
     public static final String DATABASE_NAME = "logfood.db";
     public static final String TABLE_NAME = "mymeal";
     public static final String FOOD_GROUP = "food_group";
     public static final String FOOD_TYPE = "food_type";
     public static final String QUANTITY = "quantity";
-    public static final String SERVINGS = "servings";
     public static final String DATE = "date";
-    public static final String MEAL_TIME = "meal_time";
+    public static final String TIME = "time";
+    public static final String SERVINGS = "servings";
 
     public DatabaseHelper(Context context)
     {
@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
             + QUANTITY + " TEXT,"
             + SERVINGS + " TEXT,"
             + DATE + " TEXT,"
-            + MEAL_TIME + " TEXT" + ")");
+            + TIME + " TEXT" + ")");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(QUANTITY, quantity);
         contentValues.put(SERVINGS, servings);
         contentValues.put(DATE, date);
-        contentValues.put(MEAL_TIME, time);
+        contentValues.put(TIME, time);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         if (result == -1)
@@ -73,13 +73,43 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     }
 
-    public List<PastData> getListFoods(int page, String startDate, String endDate) {
+    public boolean updateEntry(int index, PastData pastData)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("food_id", pastData.getId());
+        contentValues.put(FOOD_GROUP, pastData.getFoodGroup());
+        contentValues.put(FOOD_TYPE, pastData.getFoodType());
+        contentValues.put(QUANTITY, pastData.getServing());
+        contentValues.put(DATE, pastData.getDate());
+        contentValues.put(TIME, pastData.getMealTime());
+        return db.update(TABLE_NAME, contentValues, "food_id="+index, null) > 0;
+    }
+
+    public PastData getEntry(int index)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE food_id=" + index;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            PastData food = new PastData();
+            food.setFoodGroup(cursor.getString(cursor.getColumnIndex(FOOD_GROUP)));
+            food.setFoodType(cursor.getString(cursor.getColumnIndex(FOOD_TYPE)));
+            food.setServing(cursor.getString(cursor.getColumnIndex(QUANTITY)));
+            food.setDate(cursor.getString(cursor.getColumnIndex(DATE)));
+            food.setMealTime(cursor.getString(cursor.getColumnIndex(TIME)));
+            food.setId(cursor.getInt(cursor.getColumnIndex("food_id")));
+            return food;
+        }
+        return null;
+    }
+
+    public ArrayList<PastData> getListFoods(int page, String startDate, String endDate) {
         int itemPerPage = 4;
         int offset = (page - 1) * itemPerPage;
-        int i = 0;
-        String query = ("SELECT * FROM " + TABLE_NAME + " WHERE date BETWEEN ? AND ? "+" LIMIT " + offset + "," + itemPerPage );
-        Log.i("startDate", startDate);
-        Log.i("endDate", endDate);
+        String query = ("SELECT DISTINCT food_id,"+FOOD_GROUP+","+FOOD_TYPE+","+QUANTITY+","+DATE+","+TIME+" FROM " + TABLE_NAME + " WHERE date BETWEEN ? AND ? "+" LIMIT " + offset + "," + itemPerPage );
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(query, new String[]{endDate, startDate});
 
@@ -88,10 +118,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
             PastData food = new PastData();
             food.setFoodGroup(cursor.getString(cursor.getColumnIndex(FOOD_GROUP)));
             food.setFoodType(cursor.getString(cursor.getColumnIndex(FOOD_TYPE)));
-            food.setQuantity(cursor.getString(cursor.getColumnIndex(QUANTITY)));
-            food.setServing(cursor.getString(cursor.getColumnIndex(SERVINGS)));
+            food.setServing(cursor.getString(cursor.getColumnIndex(QUANTITY)));
             food.setDate(cursor.getString(cursor.getColumnIndex(DATE)));
-            food.setMealTime(cursor.getString(cursor.getColumnIndex(MEAL_TIME)));
+            food.setMealTime(cursor.getString(cursor.getColumnIndex(TIME)));
+            food.setId(cursor.getInt(cursor.getColumnIndex("food_id")));
+            Log.i("group",cursor.getString(cursor.getColumnIndex(FOOD_GROUP)) + cursor.getInt(cursor.getColumnIndex("food_id")));
             listFoods.add(food);
 
         }

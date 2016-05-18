@@ -5,7 +5,8 @@ package au.edu.utas.kit305_assignment2.Pojo;
  */
 public class PastData
 {
-    private String foodGroup, foodType, serving, date, mealTime, quantity ;
+    private int id;
+    private String foodGroup, foodType, serving, date, mealTime, quantity;
 
     public String getFoodGroup()
     {
@@ -65,5 +66,15 @@ public class PastData
     public void setQuantity(String quantity)
     {
         this.quantity = quantity;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 }
