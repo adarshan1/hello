@@ -65,19 +65,19 @@ public class FeedbackFragment extends Fragment
     {
         if(i == 1) {
             tfidDeatils.setVisibility(View.VISIBLE);
-            tfidDeatils.setText("tips for improving diet"+"\n"+"point"+"\n"+"point");
+            tfidDeatils.setText("1.Follow the Australian Dietary Guideline properly."+"\n"+"2.Eat plenty of vegetables and fruits as given in the guideline."+"\n"+"3.When eating away from home avoid the food that have lots of fats");
             suggestionDetails.setVisibility(View.GONE);
             moreInfromationDetails.setVisibility(View.GONE);
         } else if(i == 2) {
             tfidDeatils.setVisibility(View.GONE);
             suggestionDetails.setVisibility(View.VISIBLE);
-            suggestionDetails.setText("suggestion");
+            suggestionDetails.setText("1.Don't give up eating healthy foods."+"\n"+"2.Eat with other people not TV, eating with other people helps you maintain your meal intake from five food groups."+"\n"+"3.Eat regularly dont'skip meals.");
             moreInfromationDetails.setVisibility(View.GONE);
         } else {
             tfidDeatils.setVisibility(View.GONE);
             suggestionDetails.setVisibility(View.GONE);
             moreInfromationDetails.setVisibility(View.VISIBLE);
-            moreInfromationDetails.setText("more information");
+            moreInfromationDetails.setText("https://www.eatforhealth.gov.au/guidelines/about-australian-dietary-guidelines");
         }
     }
 }

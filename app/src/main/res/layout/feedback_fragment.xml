@@ -33,7 +33,7 @@
         android:id="@+id/tfid_details"
         android:layout_below="@+id/tfid"
         android:visibility="gone"
-        android:lines="4"/>
+        android:lines="5"/>
 
     <TextView
         android:layout_width="match_parent"
